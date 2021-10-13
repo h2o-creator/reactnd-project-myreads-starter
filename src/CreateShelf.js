@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import ChangeShelf from './ChangeShelf';
+import Book from './Book'
 
 export default class CreateShelf extends Component {
     static propTypes = {
@@ -16,16 +16,7 @@ export default class CreateShelf extends Component {
                 <div className="bookshelf-books">
                 <ol className="books-grid">
                     {shelfBooks.map((book) => (
-                        <li key={book.id}>
-                            <div className="book">
-                                <div className="book-top">
-                                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
-                                    <ChangeShelf book={book} shelf={book.shelf} onChangeShelf={onChangeShelf} />
-                                </div>
-                                <div className="book-title">{book.title}</div>
-                                <div className="book-authors">{book.authors.map((author) => (<div key={author}>{author}</div>))}</div>
-                            </div>
-                        </li>
+                        <Book key={book.id} id={book.id} image={book.imageLinks.thumbnail} title={book.title} shelf={book.shelf} authors={book.authors} onChangeShelf={onChangeShelf} />
                     ))}
                 </ol>
                 </div>
