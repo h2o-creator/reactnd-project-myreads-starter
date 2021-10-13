@@ -5,7 +5,9 @@ import Book from './Book'
 
 export default class SearchBooks extends Component {
     static propTypes = {
-        onFetchBook: PropTypes.func.isRequired
+        onFetchBook: PropTypes.func.isRequired,
+        onChangeShelf: PropTypes.func.isRequired,
+        getBookShelf: PropTypes.func.isRequired
     }
 
     state = {
@@ -15,11 +17,9 @@ export default class SearchBooks extends Component {
 
     handleChange = event => {
         this.setState({ value: event.target.value });
-        if (event.target.value.length > 3) {
-            this.props.onFetchBook(event.target.value)
-            .then ((result) => this.setState({ customBooks: result }))
-        }
-        if (this.state.customBooks.error === 'empty query') {
+        this.props.onFetchBook(event.target.value)
+        .then ((result) => this.setState({ customBooks: result }))
+        if (this.state.customBooks === undefined || this.state.customBooks.error === 'empty query') {
             this.setState({ customBooks: [] });
         }
     }
@@ -48,7 +48,8 @@ export default class SearchBooks extends Component {
                         <ol className="books-grid">
                             {(this.state.customBooks.error !== 'empty query' && this.state.customBooks.length !== 0) ? (this.state.customBooks.map((book) => (
                                 <Book key={book.id} id={book.id} image={(book.imageLinks !== undefined) ? book.imageLinks.thumbnail :
-                                    'https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg'} title={book.title} shelf='none' authors={book.authors} />
+                                    'https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg'} title={book.title} getBookShelf={this.props.getBookShelf} authors={book.authors} 
+                                    onChangeShelf={this.props.onChangeShelf} isBookInMainArray={this.props.isBookInMainArray} />
                             ))) : (<div className="search-books-results">Nothing found.</div>)}
                         </ol>
                     </div>
