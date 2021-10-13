@@ -15,14 +15,13 @@ class BooksApp extends React.Component {
     .then ((books) => (
       this.setState({books})
     ))
-    .then(() => (console.log(this.state.books)))
   }
 
   // Shelf Types By API:
   // read, wantToRead, currentlyReading (as of 13/10/2021 -- Abdelhady Salah)
   getBooksByShelf = shelf => (this.state.books.filter((book) => {
-    const filterShelf = book.shelf;
-    return filterShelf === shelf;
+      const filterShelf = book.shelf;
+      return filterShelf === shelf;
   }))
 
   moveBookToShelf = (bookID, shelf) => {
@@ -38,10 +37,17 @@ class BooksApp extends React.Component {
     })
   }
 
+  fetchBook = (searchTerms) => (
+    BooksAPI.search(searchTerms)
+    .then ((result) => result)
+  )
+
   render() {
     return (
       <div className="app">
-          <Route exact path='/search' component={SearchBooks} />
+          <Route exact path='/search' render={() => (
+            <SearchBooks onFetchBook={this.fetchBook} />
+          )} />
           <Route exact path='/' render={() => (
             <div className="list-books">
             <div className="list-books-title">
