@@ -4,8 +4,21 @@ import PropTypes from 'prop-types'
 export default class ChangeShelf extends Component {
     static propTypes = {
         book: PropTypes.string.isRequired,
-        shelf: PropTypes.string.isRequired,
-        onChangeShelf: PropTypes.func.isRequired
+        onChangeShelf: PropTypes.func.isRequired,
+        getBookShelf: PropTypes.func.isRequired
+    }
+
+    state = {
+        shelf: 'none'
+    }
+
+    componentDidMount() {
+        this.props.getBookShelf(this.props.book)
+        .then(shelf => {
+            if (this.state.shelf !== shelf) {
+                return this.setState({shelf})
+            }
+        })
     }
 
     tryChangeShelf = (event) => {
@@ -14,10 +27,9 @@ export default class ChangeShelf extends Component {
     }
 
     render() {
-        const { shelf } = this.props;
         return (
             <div className="book-shelf-changer">
-                <select value={shelf} onChange={this.tryChangeShelf} >
+                <select value={this.state.shelf} onChange={this.tryChangeShelf} >
                     <optgroup label="Move to...">
                         <option value="currentlyReading">Currently Reading</option>
                         <option value="wantToRead">Want to Read</option>
