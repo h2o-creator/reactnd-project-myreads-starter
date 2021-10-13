@@ -25,18 +25,17 @@ class BooksApp extends React.Component {
     return filterShelf === shelf;
   }))
 
-  moveBookToShelf = (book, shelf) => {
+  moveBookToShelf = (bookID, shelf) => {
     this.setState((prevState) => {
       let books = prevState.books;
       books.forEach((eachBook) => {
-        if (eachBook === book) {
+        if (eachBook.id === bookID) {
           eachBook.shelf = shelf;
+          BooksAPI.update(eachBook, shelf)
         }
       })
       return { books }
     })
-
-    BooksAPI.update(book, shelf)
   }
 
   render() {
