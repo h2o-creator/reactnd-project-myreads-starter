@@ -25,6 +25,20 @@ class BooksApp extends React.Component {
     return filterShelf === shelf;
   }))
 
+  moveBookToShelf = (book, shelf) => {
+    this.setState((prevState) => {
+      let books = prevState.books;
+      books.forEach((eachBook) => {
+        if (eachBook === book) {
+          eachBook.shelf = shelf;
+        }
+      })
+      return { books }
+    })
+
+    BooksAPI.update(book, shelf)
+  }
+
   render() {
     return (
       <div className="app">
@@ -36,14 +50,15 @@ class BooksApp extends React.Component {
             </div>
             <div className="list-books-content">
               <div>
-                <CreateShelf shelfName="Currently Reading" shelfBooks={this.getBooksByShelf('currentlyReading')} />
-                <CreateShelf shelfName="Want to Read" shelfBooks={this.getBooksByShelf('wantToRead')} />
-                <CreateShelf shelfName="Read" shelfBooks={this.getBooksByShelf('read')} />
+                <CreateShelf shelfName="Currently Reading" shelfBooks={this.getBooksByShelf('currentlyReading')} onChangeShelf={this.moveBookToShelf} />
+                <CreateShelf shelfName="Want to Read" shelfBooks={this.getBooksByShelf('wantToRead')} onChangeShelf={this.moveBookToShelf} />
+                <CreateShelf shelfName="Read" shelfBooks={this.getBooksByShelf('read')} onChangeShelf={this.moveBookToShelf} />
+                <CreateShelf shelfName="Uncategorized" shelfBooks={this.getBooksByShelf('none')} onChangeShelf={this.moveBookToShelf} />
               </div>
             </div>
             <div className="open-search">
               <Link to='/search'>
-              <button>Add a book</button>
+                <button>Add a book</button>
               </Link>
             </div>
           </div>
