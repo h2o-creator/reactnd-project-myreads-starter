@@ -14,7 +14,7 @@ const Book = (props) => {
                     )}
                 </div>
                 <div className="book-title">{title}</div>
-                <div className="book-authors">{authors.map((author) => (<div key={author}>{author}</div>))}</div>
+                <div className="book-authors">{authors !== undefined ? authors.map((author) => (<div key={author}>{author}</div>)) : 'NA'}</div>
             </div>
         </li>
     )
