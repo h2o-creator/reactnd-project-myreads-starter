@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 export default class ChangeShelf extends Component {
     static propTypes = {
-        book: PropTypes.object.isRequired,
+        book: PropTypes.string.isRequired,
         shelf: PropTypes.string.isRequired,
         onChangeShelf: PropTypes.func.isRequired
     }
