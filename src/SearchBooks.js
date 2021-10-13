@@ -47,7 +47,8 @@ export default class SearchBooks extends Component {
                     <div className="search-books-results">
                         <ol className="books-grid">
                             {(this.state.customBooks.error !== 'empty query' && this.state.customBooks.length !== 0) ? (this.state.customBooks.map((book) => (
-                                <Book key={book.id} id={book.id} image={book.imageLinks.thumbnail} title={book.title} shelf='none' authors={book.authors} />
+                                <Book key={book.id} id={book.id} image={(book.imageLinks !== undefined) ? book.imageLinks.thumbnail :
+                                    'https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg'} title={book.title} shelf='none' authors={book.authors} />
                             ))) : (<div className="search-books-results">Nothing found.</div>)}
                         </ol>
                     </div>
