@@ -24,18 +24,25 @@ class BooksApp extends React.Component {
       return filterShelf === shelf;
   }))
 
-  moveBookToShelf = (bookID, shelf) => {
-    this.setState((prevState) => {
-      let books = prevState.books;
-      books.forEach((eachBook) => {
-        if (eachBook.id === bookID) {
-          eachBook.shelf = shelf;
-          BooksAPI.update(eachBook, shelf)
-        }
+  moveBookToShelf = (bookTitle, shelf) => {
+    BooksAPI.get(bookTitle)
+    .then((book) => {
+      BooksAPI.update(book, shelf)
+      .then(() => {
+        BooksAPI.getAll()
+        .then ((books) => {
+          this.setState({books})
+        })
       })
-      return { books }
     })
   }
+
+  getBookShelf = (bookTitle) => (
+    BooksAPI.get(bookTitle)
+    .then((book) => {
+      return book.shelf !== undefined ? book.shelf : 'none';
+    })
+  )
 
   fetchBook = (searchTerms) => (
     BooksAPI.search(searchTerms)
@@ -45,8 +52,11 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-          <Route exact path='/search' render={() => (
-            <SearchBooks onFetchBook={this.fetchBook} />
+          <Route exact path='/search' render={({ history }) => (
+            <SearchBooks onFetchBook={this.fetchBook} onChangeShelf={(bookTitle, bookShelf) => {
+              this.moveBookToShelf(bookTitle, bookShelf)
+              history.push('/')
+            }} getBookShelf={this.getBookShelf} />
           )} />
           <Route exact path='/' render={() => (
             <div className="list-books">
@@ -55,10 +65,9 @@ class BooksApp extends React.Component {
             </div>
             <div className="list-books-content">
               <div>
-                <CreateShelf shelfName="Currently Reading" shelfBooks={this.getBooksByShelf('currentlyReading')} onChangeShelf={this.moveBookToShelf} />
-                <CreateShelf shelfName="Want to Read" shelfBooks={this.getBooksByShelf('wantToRead')} onChangeShelf={this.moveBookToShelf} />
-                <CreateShelf shelfName="Read" shelfBooks={this.getBooksByShelf('read')} onChangeShelf={this.moveBookToShelf} />
-                <CreateShelf shelfName="Uncategorized" shelfBooks={this.getBooksByShelf('none')} onChangeShelf={this.moveBookToShelf} />
+                <CreateShelf shelfName="Currently Reading" shelfBooks={this.getBooksByShelf('currentlyReading')} onChangeShelf={this.moveBookToShelf} getBookShelf={this.getBookShelf} />
+                <CreateShelf shelfName="Want to Read" shelfBooks={this.getBooksByShelf('wantToRead')} onChangeShelf={this.moveBookToShelf} getBookShelf={this.getBookShelf} />
+                <CreateShelf shelfName="Read" shelfBooks={this.getBooksByShelf('read')} onChangeShelf={this.moveBookToShelf} getBookShelf={this.getBookShelf} />
               </div>
             </div>
             <div className="open-search">
