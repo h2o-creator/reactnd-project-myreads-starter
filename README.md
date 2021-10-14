@@ -11,6 +11,10 @@ This app also makes use of routers to give the enduser the same natural feeling 
 
 You can search books, add them to shelves or remove them by setting the shelf to 'none'.
 
+## Visuals
+
+[![myreads-preview.gif](https://s9.gifyu.com/images/myreads-preview.gif)](https://gifyu.com/image/XXac)
+
 ## Quick Start
 
 To get started developing right away:
@@ -23,6 +27,7 @@ Don't forget to build the app for production before using it!
 ## File Structure
 ```bash
 ├── CONTRIBUTING.md
+├── LICENSE
 ├── README.md - This file.
 ├── SEARCH_TERMS.md # The whitelisted short collection of available search terms for you to use with your app.
 ├── package.json # npm package manager file. It's unlikely that you'll need to modify this.
@@ -99,3 +104,13 @@ The backend API uses a fixed set of cached search results and is limited to a pa
 ## Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). You can find more information on how to perform common tasks [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
+
+## License
+
+Starter code (initial HTML and CSS, as well as the BooksAPI) are property of Udacity. The implementation of the app (using React and JS) as well as adding functionality to the existing layout and styling was created by me "Abdelhady" and is licensed under the GNU GPL v3 license included in this fork with the name 'LICENSE'.
+
+Feel free to use this app as long as you mention Udacity for the layout and myself for implementing the functionality.
+
+## Contributing
+
+Read `CONTRIBUTING.md` for more info!
