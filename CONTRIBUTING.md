@@ -1,3 +1,9 @@
-# How to contribute
+# Contributing
 
-The files in this repository are used in the course videos and are the starting point for all students. Because we want all students to have the same experience going through course, if your pull request alters any of the core files, then it (most likely) will _not_ be merged into the project.
+This project meets with the code specifications at Udacity and provides the enduser with the expected functionality. It also makes use of the BooksAPI provided by Udacity, that means, contributions would be pretty much limited. There are no serious problems or broken features.
+
+However, react might evolve sooner or later, syntax might change, etc. If you can help make something better (without changing any functionality) feel free to create pull requests (make sure to create an issue first).
+
+Please note that pull requests will be inspected before being accepted, because I don't want to change the way the app was intended to work, and I may not have time to check all the pull requests.
+
+Thank you!
