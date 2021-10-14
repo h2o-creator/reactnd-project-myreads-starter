@@ -13,7 +13,7 @@ You can search books, add them to shelves or remove them by setting the shelf to
 
 ## Visuals
 
-[![myreads-preview.gif](https://s9.gifyu.com/images/myreads-preview.gif)](https://gifyu.com/image/XXac)
+![myreads-preview.gif](https://s9.gifyu.com/images/myreads-preview.gif)](https://gifyu.com/image/XXac)
 
 ## Quick Start
 
