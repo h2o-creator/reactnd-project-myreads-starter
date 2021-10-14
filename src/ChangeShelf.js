@@ -2,23 +2,15 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 export default class ChangeShelf extends Component {
-    static propTypes = {
-        book: PropTypes.string.isRequired,
-        onChangeShelf: PropTypes.func.isRequired,
-        getBookShelf: PropTypes.func.isRequired
-    }
-
     state = {
         shelf: 'none'
     }
 
-    componentDidMount() {
-        this.props.getBookShelf(this.props.book)
-        .then(shelf => {
-            if (this.state.shelf !== shelf) {
-                return this.setState({shelf})
-            }
-        })
+    async componentDidMount() {
+        const shelf = await this.props.getBookShelf(this.props.book);
+        if (this.state.shelf !== shelf) {
+            return this.setState({ shelf });
+        }
     }
 
     tryChangeShelf = (event) => {
@@ -40,4 +32,10 @@ export default class ChangeShelf extends Component {
             </div>
         )
     }
+}
+
+ChangeShelf.propTypes = {
+    book: PropTypes.string.isRequired,
+    onChangeShelf: PropTypes.func.isRequired,
+    getBookShelf: PropTypes.func.isRequired
 }

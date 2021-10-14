@@ -4,21 +4,22 @@ import { Link } from 'react-router-dom'
 import Book from './Book'
 
 export default class SearchBooks extends Component {
-    static propTypes = {
-        onFetchBook: PropTypes.func.isRequired,
-        onChangeShelf: PropTypes.func.isRequired,
-        getBookShelf: PropTypes.func.isRequired
+    constructor(props) {
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+
+        this.state = {
+            value: '',
+            customBooks: []
+        }
     }
 
-    state = {
-        value: '',
-        customBooks: []
-    }
-
-    handleChange = event => {
+    async handleChange(event) {
         this.setState({ value: event.target.value });
-        this.props.onFetchBook(event.target.value)
-        .then ((result) => this.setState({ customBooks: result }))
+
+        const result = await this.props.onFetchBook(event.target.value);
+        this.setState({ customBooks: result });
+
         if (this.state.customBooks === undefined || this.state.customBooks.error === 'empty query') {
             this.setState({ customBooks: [] });
         }
@@ -57,4 +58,10 @@ export default class SearchBooks extends Component {
             </div>
         )
     }
+}
+
+SearchBooks.propTypes = {
+    onFetchBook: PropTypes.func.isRequired,
+    onChangeShelf: PropTypes.func.isRequired,
+    getBookShelf: PropTypes.func.isRequired
 }
