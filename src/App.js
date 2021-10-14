@@ -6,15 +6,19 @@ import './App.css'
 import CreateShelf from './CreateShelf'
 
 class BooksApp extends React.Component {
-  state = {
+  constructor(props) {
+    super(props);
+    this.state = {
       books: []
+    }
+    this.moveBookToShelf = this.moveBookToShelf.bind(this);
+    this.getBookShelf = this.getBookShelf.bind(this);
+    this.fetchBook = this.fetchBook.bind(this);
   }
 
-  componentDidMount() {
-    BooksAPI.getAll()
-    .then ((books) => (
-      this.setState({books})
-    ))
+  async componentDidMount() {
+    const books = await BooksAPI.getAll();
+    this.setState({ books });
   }
 
   // Shelf Types By API:
@@ -24,30 +28,23 @@ class BooksApp extends React.Component {
       return filterShelf === shelf;
   }))
 
-  moveBookToShelf = (bookTitle, shelf) => {
-    BooksAPI.get(bookTitle)
-    .then((book) => {
-      BooksAPI.update(book, shelf)
-      .then(() => {
-        BooksAPI.getAll()
-        .then ((books) => {
-          this.setState({books})
-        })
-      })
-    })
+  async moveBookToShelf(bookTitle, shelf) {
+    const book = await BooksAPI.get(bookTitle);
+    await BooksAPI.update(book, shelf);
+
+    const books = await BooksAPI.getAll();
+    this.setState({ books });
   }
 
-  getBookShelf = (bookTitle) => (
-    BooksAPI.get(bookTitle)
-    .then((book) => {
-      return book.shelf !== undefined ? book.shelf : 'none';
-    })
-  )
+  async getBookShelf(bookTitle) {
+    const book = await BooksAPI.get(bookTitle);
+    return book.shelf !== undefined ? book.shelf : 'none';
+  }
 
-  fetchBook = (searchTerms) => (
-    BooksAPI.search(searchTerms)
-    .then ((result) => result)
-  )
+  async fetchBook(searchTerms) {
+    const result = await BooksAPI.search(searchTerms);
+    return result;
+  }
 
   render() {
     return (
